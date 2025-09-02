@@ -1,0 +1,133 @@
+@startuml
+
+class Escalera
+class Nivel
+class Piso
+class GeneradorNiveles
+class Bolso
+class HistorialPuntos
+class Marcador
+class JuegoDonkeyKong
+class Movimiento
+class Velocidad
+class Bonificacion
+class Sombrero
+class Articulo
+class Jugador
+class Obstaculo
+class GatoHidraulico
+class SistemaVidas
+class Controlador
+class Sombrilla
+class Martillo
+class Barril
+class Tarta
+class PowerUp
+class Animacion
+class BolasFuego
+
+interface EjecutarAccion {
+  + ejecutar()
+}
+
+interface IngresarDato {
+  + ingresar()
+}
+
+interface MostrarSalida {
+  + mostrar()
+}
+
+interface EncenderSenal {
+  + Encender()
+}
+
+interface Dato {
+  + Dato()
+}
+
+interface AccionCompuesta {
+  + ObjetoSalida:Accion()
+  + ObjetoSalida:Accion(ObjetoEntrada)
+}
+
+class MemoriaJugador {
+  jugador: Jugador[1]
+}
+
+class MemoriaArticulo {
+  articulo: Articulo[1..4]
+}
+
+class MemoriaObstaculo {
+  obstaculo: Obstaculo[1..4]
+}
+
+class MemoriaNivel {
+  nivel: Nivel[1]
+}
+
+class MemoriaAnimacion {
+  animacion: Animacion[1..4]
+}
+
+JuegoDonkeyKong *-- Jugador
+JuegoDonkeyKong *-- Marcador
+JuegoDonkeyKong *-- GeneradorNiveles
+JuegoDonkeyKong *-- Movimiento
+JuegoDonkeyKong *-- Obstaculo
+JuegoDonkeyKong *-- Articulo
+JuegoDonkeyKong *-- SistemaVidas
+
+Jugador "1" o-- "4" Articulo
+Jugador "1" o-- "4" Obstaculo
+
+Articulo <|-- Sombrero
+Articulo <|-- Sombrilla
+Articulo <|-- Bolso
+Articulo <|-- Martillo
+
+Martillo <|-- PowerUp
+
+Bonificacion *-- Sombrero
+Bonificacion *-- Sombrilla
+Bonificacion *-- Bolso
+
+Bonificacion o-- Marcador
+Marcador o-- HistorialPuntos
+
+Obstaculo <|-- GatoHidraulico
+Obstaculo <|-- BolasFuego
+Obstaculo <|-- Tarta
+Obstaculo <|-- Barril
+
+Barril *-- Animacion
+Tarta *-- Animacion
+BolasFuego *-- Animacion
+GatoHidraulico *-- Animacion
+
+Movimiento "*" *-- "1" Animacion
+Movimiento <|-- Velocidad
+
+GeneradorNiveles "1" *-- "*" Nivel
+Nivel "1" *-- "*" Piso
+Nivel "1" *-- "*" Escalera
+
+SistemaVidas <|-- Controlador
+
+Jugador --|> EjecutarAccion
+Marcador --|> MostrarSalida
+GeneradorNiveles --|> EjecutarAccion
+JuegoDonkeyKong --|> IngresarDato
+
+MemoriaJugador *-- Jugador
+MemoriaArticulo *-- Articulo
+MemoriaObstaculo *-- Obstaculo
+MemoriaNivel *-- Nivel
+MemoriaAnimacion *-- Animacion
+
+JuegoDonkeyKong --|> EncenderSenal
+Marcador --|> Dato
+Jugador --|> AccionCompuesta
+
+@enduml
